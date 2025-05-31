@@ -1,12 +1,12 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { apiService } from '../services/api';
+import api from '../services/api';
 
 // Async thunks
 export const fetchChannels = createAsyncThunk(
   'channels/fetchChannels',
   async (_, { rejectWithValue }) => {
     try {
-      const response = await apiService.get('/channels');
+      const response = await api.get('/channels');
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || 'Failed to fetch channels');
@@ -18,7 +18,7 @@ export const fetchChannelById = createAsyncThunk(
   'channels/fetchChannelById',
   async (channelId, { rejectWithValue }) => {
     try {
-      const response = await apiService.get(`/channels/${channelId}`);
+      const response = await api.get(`/channels/${channelId}`);
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || 'Failed to fetch channel');
@@ -30,7 +30,7 @@ export const createChannel = createAsyncThunk(
   'channels/createChannel',
   async (channelData, { rejectWithValue }) => {
     try {
-      const response = await apiService.post('/channels', channelData);
+      const response = await api.post('/channels', channelData);
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || 'Failed to create channel');
@@ -42,7 +42,7 @@ export const joinChannel = createAsyncThunk(
   'channels/joinChannel',
   async (channelId, { rejectWithValue }) => {
     try {
-      const response = await apiService.post(`/channels/${channelId}/join`);
+      const response = await api.post(`/channels/${channelId}/join`);
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || 'Failed to join channel');
@@ -54,7 +54,7 @@ export const leaveChannel = createAsyncThunk(
   'channels/leaveChannel',
   async (channelId, { rejectWithValue }) => {
     try {
-      const response = await apiService.post(`/channels/${channelId}/leave`);
+      const response = await api.post(`/channels/${channelId}/leave`);
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || 'Failed to leave channel');
@@ -66,7 +66,7 @@ export const fetchChannelPosts = createAsyncThunk(
   'channels/fetchChannelPosts',
   async (channelId, { rejectWithValue }) => {
     try {
-      const response = await apiService.get(`/channels/${channelId}/posts`);
+      const response = await api.get(`/channels/${channelId}/posts`);
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || 'Failed to fetch posts');
@@ -78,7 +78,7 @@ export const createPost = createAsyncThunk(
   'channels/createPost',
   async ({ channelId, postData }, { rejectWithValue }) => {
     try {
-      const response = await apiService.post(`/channels/${channelId}/posts`, postData);
+      const response = await api.post(`/channels/${channelId}/posts`, postData);
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || 'Failed to create post');
