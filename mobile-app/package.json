@@ -1,0 +1,32 @@
+{
+  "name": "mobile-app",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "android": "react-native run-android",
+    "ios": "react-native run-ios",
+    "start": "react-native start",
+    "test": "jest",
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@react-native-community/cli": "^18.0.0",
+    "@react-navigation/bottom-tabs": "^7.3.14",
+    "@react-navigation/native": "^7.1.10",
+    "@react-navigation/stack": "^7.3.3",
+    "@reduxjs/toolkit": "^2.8.2",
+    "axios": "^1.9.0",
+    "react": "^19.1.0",
+    "react-native": "^0.79.2",
+    "react-native-gesture-handler": "^2.25.0",
+    "react-native-reanimated": "^3.18.0",
+    "react-native-safe-area-context": "^5.4.1",
+    "react-native-screens": "^4.11.1",
+    "react-native-vector-icons": "^10.2.0",
+    "react-redux": "^9.2.0"
+  }
+}
