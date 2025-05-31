@@ -87,4 +87,7 @@ export const testAPI = {
   superAdminAccess: () => api.get('/test/superadmin'),
 };
 
+// Export apiService for channel operations
+export const apiService = api;
+
 export default api;
