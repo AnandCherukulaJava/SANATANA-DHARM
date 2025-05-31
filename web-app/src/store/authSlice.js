@@ -86,8 +86,17 @@ export const verifyEmail = createAsyncThunk(
   }
 );
 
+const getStoredUser = () => {
+  try {
+    const storedUser = localStorage.getItem('user');
+    return storedUser && storedUser !== 'undefined' ? JSON.parse(storedUser) : null;
+  } catch (error) {
+    return null;
+  }
+};
+
 const initialState = {
-  user: JSON.parse(localStorage.getItem('user')) || null,
+  user: getStoredUser(),
   token: localStorage.getItem('token') || null,
   refreshToken: localStorage.getItem('refreshToken') || null,
   isAuthenticated: !!localStorage.getItem('token'),
