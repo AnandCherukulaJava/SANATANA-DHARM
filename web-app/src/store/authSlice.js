@@ -113,6 +113,15 @@ const authSlice = createSlice({
       state.user = user;
       state.isAuthenticated = true;
     },
+    logout: (state) => {
+      localStorage.removeItem('token');
+      localStorage.removeItem('refreshToken');
+      localStorage.removeItem('user');
+      state.isAuthenticated = false;
+      state.token = null;
+      state.refreshToken = null;
+      state.user = null;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -196,5 +205,5 @@ const authSlice = createSlice({
   },
 });
 
-export const { clearError, clearMessage, setCredentials } = authSlice.actions;
+export const { clearError, clearMessage, setCredentials, logout } = authSlice.actions;
 export default authSlice.reducer;

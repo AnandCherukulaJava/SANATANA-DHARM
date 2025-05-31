@@ -14,6 +14,7 @@ import ResetPassword from './pages/ResetPassword';
 import VerifyEmail from './pages/VerifyEmail';
 import Dashboard from './pages/Dashboard';
 import AdminDashboard from './pages/AdminDashboard';
+import Channel from './pages/Channel';
 
 const App = () => {
   return (
@@ -34,6 +35,15 @@ const App = () => {
               element={
                 <ProtectedRoute>
                   <Dashboard />
+                </ProtectedRoute>
+              } 
+            />
+            
+            <Route 
+              path="/channel/:channelId" 
+              element={
+                <ProtectedRoute>
+                  <Channel />
                 </ProtectedRoute>
               } 
             />

@@ -1,107 +1,39 @@
-import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { logoutUser } from '../store/authSlice';
+import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
+import { Navigate } from 'react-router-dom';
+import Sidebar from './Sidebar';
 
 const Layout = ({ children }) => {
-  const { isAuthenticated, user } = useSelector((state) => state.auth);
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const { isAuthenticated } = useSelector(state => state.auth);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
-  const handleLogout = () => {
-    dispatch(logoutUser());
-    navigate('/login');
-  };
-
-  const styles = {
-    layout: {
-      minHeight: '100vh',
-      display: 'flex',
-      flexDirection: 'column',
-    },
-    header: {
-      background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-      color: 'white',
-      padding: '1rem 2rem',
-      display: 'flex',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-      boxShadow: '0 2px 10px rgba(0,0,0,0.1)',
-    },
-    logo: {
-      fontSize: '1.5rem',
-      fontWeight: 'bold',
-      cursor: 'pointer',
-    },
-    nav: {
-      display: 'flex',
-      gap: '1rem',
-      alignItems: 'center',
-    },
-    navButton: {
-      background: 'rgba(255,255,255,0.2)',
-      border: 'none',
-      color: 'white',
-      padding: '0.5rem 1rem',
-      borderRadius: '5px',
-      cursor: 'pointer',
-      transition: 'background 0.3s',
-    },
-    userInfo: {
-      display: 'flex',
-      alignItems: 'center',
-      gap: '1rem',
-    },
-    main: {
-      flex: 1,
-      padding: '2rem',
-      background: 'linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)',
-    },
-  };
+  if (!isAuthenticated) {
+    return <Navigate to="/login" replace />;
+  }
 
   return (
-    <div style={styles.layout}>
-      <header style={styles.header}>
-        <div style={styles.logo} onClick={() => navigate('/')}>
-          🕉️ SANATANA-DHARM
+    <div className="min-h-screen bg-gray-50 flex">
+      {/* Sidebar */}
+      <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
+      
+      {/* Main Content */}
+      <div className="flex-1 lg:ml-80">
+        {/* Mobile Header */}
+        <div className="lg:hidden bg-white shadow-sm border-b border-gray-200 p-4">
+          <button
+            onClick={() => setSidebarOpen(true)}
+            className="text-gray-600 hover:text-gray-900"
+          >
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          </button>
         </div>
-        {isAuthenticated && (
-          <nav style={styles.nav}>
-            <div style={styles.userInfo}>
-              <span>Welcome, {user?.username || user?.firstName || 'User'}</span>
-              {user?.roles?.includes('ADMIN') && (
-                <button
-                  style={styles.navButton}
-                  onClick={() => navigate('/admin')}
-                  onMouseOver={(e) => e.target.style.background = 'rgba(255,255,255,0.3)'}
-                  onMouseOut={(e) => e.target.style.background = 'rgba(255,255,255,0.2)'}
-                >
-                  Admin Panel
-                </button>
-              )}
-              <button
-                style={styles.navButton}
-                onClick={() => navigate('/dashboard')}
-                onMouseOver={(e) => e.target.style.background = 'rgba(255,255,255,0.3)'}
-                onMouseOut={(e) => e.target.style.background = 'rgba(255,255,255,0.2)'}
-              >
-                Dashboard
-              </button>
-              <button
-                style={styles.navButton}
-                onClick={handleLogout}
-                onMouseOver={(e) => e.target.style.background = 'rgba(255,255,255,0.3)'}
-                onMouseOut={(e) => e.target.style.background = 'rgba(255,255,255,0.2)'}
-              >
-                Logout
-              </button>
-            </div>
-          </nav>
-        )}
-      </header>
-      <main style={styles.main}>
-        {children}
-      </main>
+        
+        <main className="min-h-screen">
+          {children}
+        </main>
+      </div>
     </div>
   );
 };
